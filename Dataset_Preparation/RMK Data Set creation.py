@@ -4,10 +4,10 @@ import numpy as np
 import re
 import csv
 
-
 '''
 Replacing some words.
-Ex: Both @ , 'at' and 'after' are used for same purpose like @6:30 / at 6:30 / after 6:30. So I will replace the 'at' and 'after' by '@'
+Ex: Both @ , 'at' and 'after' are used for same purpose like @6:30 / at 6:30 / after 6:30. 
+So I will replace the 'at' and 'after' by '@'
 '''
 
 # Read the whole file 
@@ -25,12 +25,10 @@ filedata = filedata.replace('nusrat :','nusrat - ')
 
 filedata = filedata.replace('nusrat - ','nusrat ~ ')  
 
-
 # Creating a new text file which reflects the changes 
 
 with open('rmk_broadcast_edited.txt', 'w') as file:
     file.write(filedata)
-
 
 '''
 Count frequency of some symbols 
@@ -43,8 +41,7 @@ comma_count = 0
 
 with open('rmk_broadcast_edited.txt','r') as f:
     
-    lines = f.readlines()
-    
+    lines = f.readlines()   
     for line in lines:
         words = line.split()
         for word in words:
@@ -69,7 +66,6 @@ print("comma counts are "+ str(comma_count))
 '''
 Declaration of lists
 '''
-
 day  = []
 date = []
 year = []
@@ -79,26 +75,19 @@ broadcaster = []
 micro_time = []
 is_sharp = []
 
-
 # Loading the text file
 
 list_of_lines = np.genfromtxt('rmk_broadcast_edited.txt', delimiter='\n', dtype='str')
 print("Length is " + str(len(list_of_lines))) # If not an even number then wrong format
 
-
 # Loading the necessary data into seperate lists
 
 line_no = 0  
-
-for line in list_of_lines:
-    
-    if line_no%2 == 0:
-        
+for line in list_of_lines:    
+    if line_no%2 == 0:        
         # Monday, January 2, 2017 [Line format]
-
-        # split the line into 3 parts and returns the as a list
+        # Split the line into 3 parts and returns the as a list
         words = line.split(sep=',')
-
         day.append(words[0].strip())
         date.append(words[1].strip())
         year.append(words[2].strip())
@@ -163,8 +152,7 @@ with open('rmk_dataset.csv', 'w', newline='') as file:
     the_writer = csv.DictWriter(file, fieldnames = columns)
     the_writer.writeheader()
     
-    for i in range(0,len(day)):
-        
+    for i in range(0,len(day)):      
         the_writer.writerow({ 'Day': day[i], 
                               'Date': date[i], 
                               'Year':year[i], 
@@ -172,3 +160,4 @@ with open('rmk_dataset.csv', 'w', newline='') as file:
                               'Broadcaster': broadcaster[i],
                               'Micro_time': micro_time[i], 
                               'Is_sharp_time?': is_sharp[i] })
+        
